@@ -1,7 +1,10 @@
+import { BrowserRouter } from "react-router-dom";
+import SideBar from "./Components/SideBar";
 function App() {
   return (
-    <div>
-    </div>
+    <BrowserRouter>
+      <SideBar />
+    </BrowserRouter>
   );
 }
 
