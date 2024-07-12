@@ -1,10 +1,19 @@
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import SideBar from "./Components/SideBar";
-function App() {
+import Tasks from "./Pages/Tasks";
+const App = () => {
   return (
-    <BrowserRouter>
-      <SideBar />
-    </BrowserRouter>
+    <div className="flex h-screen bg-black gap-5">
+      <BrowserRouter>
+        <SideBar />
+        <Routes>
+          <Route path="/" element={<Tasks />} />
+          <Route path="/myday" element={<Tasks />} />
+          <Route path="/important" element={<Tasks />} />
+          <Route path="/category/:id" element={<Tasks />} />
+        </Routes>
+      </BrowserRouter>
+    </div>
   );
 }
 
