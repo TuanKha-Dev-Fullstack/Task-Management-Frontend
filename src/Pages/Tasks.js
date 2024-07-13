@@ -1,18 +1,16 @@
-import { faHouse } from "@fortawesome/free-solid-svg-icons"
-import Title from "../Components/Title"
-import Task from "../Components/Task"
+import { faHouse } from "@fortawesome/free-solid-svg-icons";
+import Title from "../Components/Title";
+import TaskList from "../Components/TaskList";
+import ButtonAdd from "../Components/ButtonAdd";
 
 const Tasks = () => {
-    const task = { id: 1, title: ' ent using libraries like Redux or context API. ent using libraries like Redux or context API. ent using libraries like Redux or context API.', completed: false };
-    const task2 = { id: 2, title: 'Learn React', completed: true };
-
     return (
-        <div className="w-3/4 bg-zinc-800 m-4 rounded-xl p-10">
+        <div className="w-3/4 bg-zinc-800 m-4 rounded-xl p-4 overflow-hidden flex flex-col">
             <Title text="Tasks" icon={faHouse} color="text-red-500" />
-            <Task task={task}/>
-            <Task task={task2}/>
+            <TaskList />
+            <ButtonAdd />
         </div>
-    )
-}
+    );
+};
 
-export default Tasks
+export default Tasks;

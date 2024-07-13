@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 const Title = ({text, icon, color}) => {
     return (
-        <div className={`font-semibold text-3xl ${color}`}>
+        <div className={`font-semibold text-3xl ${color} flex-none h-10`}>
             <FontAwesomeIcon icon={icon} className="mr-2" />
             {text}
         </div>

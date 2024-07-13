@@ -5,13 +5,13 @@ import PropTypes from 'prop-types';
 
 const Task = ({ task, onComplete, onEdit, onDelete }) => {
     return (
-        <div className="flex items-center justify-between p-4 mb-2 bg-zinc-700 rounded shadow">
-            <div className="relative flex p-3 rounded-full cursor-pointer">
+        <div className="flex items-center justify-between p-3 mb-2 bg-zinc-700 rounded shadow">
+            <div className="relative flex rounded-full cursor-pointer">
                 <input
                     type="checkbox"
                     checked={task.completed}
-                    onChange={() => onComplete(task.id)}
-                    className="before:content[''] peer relative h-6 w-6 cursor-pointer appearance-none rounded-full border border-white transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:opacity-0 before:transition-opacity checked:border-none checked:bg-pink-300"
+                    // onChange={() => onComplete(task.id)}
+                    className="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-full border border-white transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:opacity-0 before:transition-opacity checked:border-none checked:bg-pink-300"
                 />
                 <span
                     className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"
@@ -33,7 +33,7 @@ const Task = ({ task, onComplete, onEdit, onDelete }) => {
                 </span>
             </div>
             <div className="flex-1 px-4">
-                <span className={`${task.completed ? 'line-through text-zinc-800' : 'text-white'} text-left`}>
+                <span className={`${task.completed ? 'line-through text-zinc-800' : 'text-white'} text-left text-sm`}>
                     {task.title}
                 </span>
             </div>
@@ -41,17 +41,17 @@ const Task = ({ task, onComplete, onEdit, onDelete }) => {
                 <FontAwesomeIcon
                     icon={faStar}
                     className="text-pink-300 cursor-pointer mr-2"
-                    onClick={() => onEdit(task.id)}
+                    // onClick={() => onEdit(task.id)}
                 />
                 <FontAwesomeIcon
                     icon={faEdit}
                     className="text-pink-300 cursor-pointer mr-2"
-                    onClick={() => onEdit(task.id)}
+                    // onClick={() => onEdit(task.id)}
                 />
                 <FontAwesomeIcon
                     icon={faTrashAlt}
-                    className="text-pink-300 cursor-pointer mr-2"
-                    onClick={() => onDelete(task.id)}
+                    className="text-pink-300 cursor-pointer"
+                    // onClick={() => onDelete(task.id)}
                 />
             </div>
         </div>
