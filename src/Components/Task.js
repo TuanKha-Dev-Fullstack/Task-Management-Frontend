@@ -1,5 +1,5 @@
-import { faStar } from '@fortawesome/free-regular-svg-icons/faStar';
-import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faStar as regularStar } from '@fortawesome/free-regular-svg-icons';
+import { faStar as solidStar, faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PropTypes from 'prop-types';
 
@@ -9,7 +9,7 @@ const Task = ({ task, onComplete, onEdit, onDelete }) => {
             <div className="relative flex rounded-full cursor-pointer">
                 <input
                     type="checkbox"
-                    checked={task.completed}
+                    checked={task.isCompleted}
                     // onChange={() => onComplete(task.id)}
                     className="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-full border border-white transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:opacity-0 before:transition-opacity checked:border-none checked:bg-pink-300"
                 />
@@ -33,13 +33,13 @@ const Task = ({ task, onComplete, onEdit, onDelete }) => {
                 </span>
             </div>
             <div className="flex-1 px-4">
-                <span className={`${task.completed ? 'line-through text-zinc-800' : 'text-white'} text-left text-sm`}>
-                    {task.title}
+                <span className={`${task.isCompleted ? 'line-through text-zinc-800' : 'text-white'} text-left text-sm`}>
+                    {task.name}
                 </span>
             </div>
             <div className="flex items-center">
                 <FontAwesomeIcon
-                    icon={faStar}
+                    icon={task.isImportant ? solidStar : regularStar}
                     className="text-pink-300 cursor-pointer mr-2"
                     // onClick={() => onEdit(task.id)}
                 />
