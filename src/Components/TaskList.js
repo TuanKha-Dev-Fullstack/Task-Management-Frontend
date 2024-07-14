@@ -3,40 +3,30 @@ import Task from "./Task";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import '../Styles/CustomScroll.css';
+import useApi from "../Hooks/UseApi";
 
 const TaskList = () => {
-    const [tasks, setTasks] = useState([
-        { id: 1, title: 'Task 1', completed: false },
-        { id: 2, title: 'Task 2', completed: true },
-        { id: 3, title: 'Task 3', completed: false },
-        { id: 4, title: 'Task 4', completed: true },
-        { id: 5, title: 'Task 5', completed: false },
-        { id: 6, title: 'Task 6', completed: true },
-        { id: 7, title: 'Task 7', completed: false },
-        { id: 8, title: 'Task 8', completed: true },
-        { id: 9, title: 'Task 9', completed: false },
-        { id: 10, title: 'Task 10', completed: true },
-        { id: 11, title: 'Task 11', completed: false },
-        { id: 12, title: 'Task 12', completed: true },
-        { id: 13, title: 'Task 13', completed: false },
-        { id: 14, title: 'Task 14', completed: true },
-        { id: 15, title: 'Task 15', completed: false },
-        { id: 16, title: 'Task 16', completed: true },
-        { id: 17, title: 'Task 17', completed: false },
-        { id: 18, title: 'Task 18', completed: true },
-        { id: 19, title: 'Task 19', completed: false },
-        { id: 20, title: 'Task 20', completed: true },
+    const [tasks] = useState([
+        { id: 4, name: 'Task 4', isCompleted: true },
+        { id: 2, name: 'Task 2', isCompleted: true },
+        { id: 6, name: 'Task 6', isCompleted: true },
+        { id: 8, name: 'Task 8', isCompleted: true },
+        { id: 10, name: 'Task 10', isCompleted: true },
+        { id: 12, name: 'Task 12', isCompleted: true },
+        { id: 14, name: 'Task 14', isCompleted: true },
+        { id: 16, name: 'Task 16', isCompleted: true },
+        { id: 18, name: 'Task 18', isCompleted: true },
+        { id: 20, name: 'Task 20', isCompleted: true },
     ]);
+    const {data: tasksUncompleted} = useApi("http://localhost:5000/api/v1/tasks/unfinished");
     const [showCompleted, setShowCompleted] = useState(true);
-    const completedTasks = tasks.filter(task => task.completed);
-    const incompleteTasks = tasks.filter(task => !task.completed);
     const handleButtonCompleted = () => {
         setShowCompleted(!showCompleted);
     }
     return (
         <div className="overflow-y-auto custom-scrollbar flex-grow">
             <div className="my-4">
-                {incompleteTasks.map((task) => (
+                {tasksUncompleted?.map((task) => (
                     <Task key={task.id}
                         task={task} />
                 ))}
@@ -49,7 +39,7 @@ const TaskList = () => {
                     <span className="ml-2">Completed</span>
                 </button>
                 {showCompleted && (<div className="mt-2">
-                    {completedTasks.map((task) => (
+                    {tasks.map((task) => (
                         <Task key={task.id}
                             task={task} />
                     ))}
