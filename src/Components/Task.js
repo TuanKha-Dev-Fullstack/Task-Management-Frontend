@@ -3,7 +3,8 @@ import { faStar as solidStar, faEdit, faTrashAlt } from '@fortawesome/free-solid
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PropTypes from 'prop-types';
 
-const Task = ({ task, onComplete, onEdit, onDelete }) => {
+const Task = ({ task, onComplete, onEdit, onDelete, color }) => {
+    const checkedBgClass = `checked:bg-${color}`;
     return (
         <div className="flex items-center justify-between p-3 mb-2 bg-zinc-700 rounded shadow">
             <div className="relative flex rounded-full cursor-pointer">
@@ -11,7 +12,7 @@ const Task = ({ task, onComplete, onEdit, onDelete }) => {
                     type="checkbox"
                     checked={task.isCompeleted}
                     // onChange={() => onComplete(task.id)}
-                    className="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-full border border-white transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:opacity-0 before:transition-opacity checked:border-none checked:bg-pink-300"
+                    className={`before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-full border border-white transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:opacity-0 before:transition-opacity checked:border-none ${checkedBgClass}`}
                 />
                 <span
                     className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"
@@ -40,18 +41,18 @@ const Task = ({ task, onComplete, onEdit, onDelete }) => {
             <div className="flex items-center">
                 <FontAwesomeIcon
                     icon={task.isImportant ? solidStar : regularStar}
-                    className="text-pink-300 cursor-pointer mr-2"
-                    // onClick={() => onEdit(task.id)}
+                    className={`text-${color} cursor-pointer mr-2`}
+                // onClick={() => onEdit(task.id)}
                 />
                 <FontAwesomeIcon
                     icon={faEdit}
-                    className="text-pink-300 cursor-pointer mr-2"
-                    // onClick={() => onEdit(task.id)}
+                    className={`text-${color} cursor-pointer mr-2`}
+                // onClick={() => onEdit(task.id)}
                 />
                 <FontAwesomeIcon
                     icon={faTrashAlt}
-                    className="text-pink-300 cursor-pointer"
-                    // onClick={() => onDelete(task.id)}
+                    className={`text-${color} cursor-pointer mr-2`}
+                // onClick={() => onDelete(task.id)}
                 />
             </div>
         </div>
@@ -62,7 +63,8 @@ Task.propTypes = {
     task: PropTypes.object.isRequired,
     onComplete: PropTypes.func.isRequired,
     onEdit: PropTypes.func.isRequired,
-    onDelete: PropTypes.func.isRequired
+    onDelete: PropTypes.func.isRequired,
+    color: PropTypes.string.isRequired
 };
 
 export default Task;
