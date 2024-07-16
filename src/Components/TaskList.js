@@ -4,10 +4,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import '../Styles/CustomScroll.css';
 import useApi from "../Hooks/UseApi";
+import PropTypes from 'prop-types';
 
-const TaskList = () => {
-    const {data: tasksUncompleted} = useApi("http://localhost:5000/api/v1/tasks/unfinished");
-    const {data: tasksCompleted} = useApi("http://localhost:5000/api/v1/tasks/finished");
+const TaskList = ({ color }) => {
+    const { data: tasksUncompleted } = useApi("http://localhost:5000/api/v1/tasks/unfinished");
+    const { data: tasksCompleted } = useApi("http://localhost:5000/api/v1/tasks/finished");
     const [showCompleted, setShowCompleted] = useState(true);
     const handleButtonCompleted = () => {
         setShowCompleted(!showCompleted);
@@ -17,10 +18,11 @@ const TaskList = () => {
             <div className="my-4">
                 {tasksUncompleted?.map((task) => (
                     <Task key={task.id}
-                        task={task} />
+                        task={task} 
+                        color={color} />
                 ))}
                 <button
-                    className="bg-zinc-700 text-white px-2 py-1 my-4 rounded flex items-center hover:bg-pink-300"
+                    className={`bg-zinc-700 text-white px-2 py-1 my-4 rounded flex items-center hover:bg-${color}`}
                     onClick={handleButtonCompleted}>
                     <span className="w-4 flex justify-center">
                         <FontAwesomeIcon icon={showCompleted ? faChevronDown : faChevronRight} />
@@ -30,12 +32,17 @@ const TaskList = () => {
                 {showCompleted && (<div className="mt-2">
                     {tasksCompleted?.map((task) => (
                         <Task key={task.id}
-                            task={task} />
+                            task={task} 
+                            color={color} />
                     ))}
                 </div>)}
             </div>
         </div>
     );
+};
+
+TaskList.propTypes = {
+    color: PropTypes.string.isRequired
 };
 
 export default TaskList;
