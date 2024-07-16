@@ -6,9 +6,11 @@ import '../Styles/CustomScroll.css';
 import useApi from "../Hooks/UseApi";
 import PropTypes from 'prop-types';
 
-const TaskList = ({ color }) => {
-    const { data: tasksUncompleted } = useApi("http://localhost:5000/api/v1/tasks/unfinished");
-    const { data: tasksCompleted } = useApi("http://localhost:5000/api/v1/tasks/finished");
+const TaskList = ({ color, url }) => {
+    const { data: tasks } = useApi(url);
+    const tasksUncompleted = tasks?.filter((task) => !task.isCompeleted);
+    const tasksCompleted = tasks?.filter((task) => task.isCompeleted);
+    console.log(tasks);
     const [showCompleted, setShowCompleted] = useState(true);
     const handleButtonCompleted = () => {
         setShowCompleted(!showCompleted);
@@ -42,7 +44,8 @@ const TaskList = ({ color }) => {
 };
 
 TaskList.propTypes = {
-    color: PropTypes.string.isRequired
+    color: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired
 };
 
 export default TaskList;
