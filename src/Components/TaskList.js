@@ -10,7 +10,6 @@ const TaskList = ({ color, url }) => {
     const { data: tasks } = useApi(url);
     const tasksUncompleted = tasks?.filter((task) => !task.isCompeleted);
     const tasksCompleted = tasks?.filter((task) => task.isCompeleted);
-    console.log(tasks);
     const [showCompleted, setShowCompleted] = useState(true);
     const handleButtonCompleted = () => {
         setShowCompleted(!showCompleted);
@@ -20,11 +19,10 @@ const TaskList = ({ color, url }) => {
             <div className="my-4">
                 {tasksUncompleted?.map((task) => (
                     <Task key={task.id}
-                        task={task} 
+                        task={task}
                         color={color} />
                 ))}
-                <button
-                    className={`bg-zinc-700 text-white px-2 py-1 my-4 rounded flex items-center hover:bg-${color}`}
+                <button className={`bg-zinc-700 text-white px-2 py-1 my-4 rounded flex items-center hover:bg-${color}`}
                     onClick={handleButtonCompleted}>
                     <span className="w-4 flex justify-center">
                         <FontAwesomeIcon icon={showCompleted ? faChevronDown : faChevronRight} />
@@ -34,7 +32,7 @@ const TaskList = ({ color, url }) => {
                 {showCompleted && (<div className="mt-2">
                     {tasksCompleted?.map((task) => (
                         <Task key={task.id}
-                            task={task} 
+                            task={task}
                             color={color} />
                     ))}
                 </div>)}
