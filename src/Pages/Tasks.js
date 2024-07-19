@@ -9,7 +9,7 @@ const Tasks = ({ color }) => {
     return (
         <div className="w-3/4 bg-zinc-800 m-4 rounded-xl p-4 overflow-hidden flex flex-col">
             <Title text="Tasks" icon={faHouse} color={'text-' + color} />
-            <TaskList color={color} url={url} />
+            <TaskList color={color} url={url} hover_color={'hover:bg-red-500'}/>
             <ButtonAdd border_color="border-pink-300" text_color={'text-' + color} hover_color="hover:bg-pink-300" />
         </div>
     );

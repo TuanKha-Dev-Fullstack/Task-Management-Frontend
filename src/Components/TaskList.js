@@ -6,13 +6,16 @@ import '../Styles/CustomScroll.css';
 import useApi from "../Hooks/UseApi";
 import PropTypes from 'prop-types';
 
-const TaskList = ({ color, url }) => {
-    const { data: tasks } = useApi(url);
+const TaskList = ({ color, url, hover_color }) => {
+    const { data: tasks, refetch } = useApi(url);
     const tasksUncompleted = tasks?.filter((task) => !task.isCompeleted);
     const tasksCompleted = tasks?.filter((task) => task.isCompeleted);
     const [showCompleted, setShowCompleted] = useState(true);
     const handleButtonCompleted = () => {
         setShowCompleted(!showCompleted);
+    }
+    const handleRefetch = () => {
+        refetch();
     }
     return (
         <div className="overflow-y-auto custom-scrollbar flex-grow">
@@ -20,9 +23,11 @@ const TaskList = ({ color, url }) => {
                 {tasksUncompleted?.map((task) => (
                     <Task key={task.id}
                         task={task}
-                        color={color} />
+                        color={color} 
+                        onRefetch={handleRefetch} 
+                        hover_color={hover_color} />
                 ))}
-                <button className={`bg-zinc-700 text-white px-2 py-1 my-4 rounded flex items-center hover:bg-${color}`}
+                <button className={`bg-zinc-700 text-white px-2 py-1 my-4 rounded flex items-center ${hover_color}`}
                     onClick={handleButtonCompleted}>
                     <span className="w-4 flex justify-center">
                         <FontAwesomeIcon icon={showCompleted ? faChevronDown : faChevronRight} />
@@ -33,7 +38,9 @@ const TaskList = ({ color, url }) => {
                     {tasksCompleted?.map((task) => (
                         <Task key={task.id}
                             task={task}
-                            color={color} />
+                            color={color}
+                            onRefetch={handleRefetch}
+                            hover_color={hover_color} />
                     ))}
                 </div>)}
             </div>
@@ -43,7 +50,8 @@ const TaskList = ({ color, url }) => {
 
 TaskList.propTypes = {
     color: PropTypes.string.isRequired,
-    url: PropTypes.string.isRequired
+    url: PropTypes.string.isRequired,
+    hover_color: PropTypes.string
 };
 
 export default TaskList;

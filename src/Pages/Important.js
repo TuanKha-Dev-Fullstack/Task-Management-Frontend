@@ -9,7 +9,7 @@ const Important = ({ color }) => {
     return (
         <div className="w-3/4 bg-zinc-800 m-4 rounded-xl p-4 overflow-hidden flex flex-col">
             <Title text="Important" icon={faStar} color={'text-' + color} />
-            <TaskList color={color} url={url}/>
+            <TaskList color={color} url={url} hover_color={'hover:bg-yellow-500'}/>
             <ButtonAdd border_color="border-yellow-200" text_color="text-yellow-500" hover_color="hover:bg-yellow-200" />
         </div>
     );
