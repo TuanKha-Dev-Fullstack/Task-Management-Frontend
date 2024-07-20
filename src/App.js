@@ -8,9 +8,9 @@ const App = () => {
       <BrowserRouter>
         <SideBar />
         <Routes>
-          <Route path="/" element={<Tasks color="red-500"/>} />
+          <Route path="/" element={<Tasks />} />
           <Route path="/myday" element={<Tasks color="red-500"/>} />
-          <Route path="/important" element={<Important color="yellow-500"/>} />
+          <Route path="/important" element={<Important />} />
           <Route path="/category/:id" element={<Tasks color="red-500"/>} />
         </Routes>
       </BrowserRouter>

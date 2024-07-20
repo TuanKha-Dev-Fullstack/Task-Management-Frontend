@@ -29,7 +29,7 @@ const InputTask = ({ onRefetch }) => {
                     type="text"
                     value={title}
                     className="w-full h-10 text-white border-none focus:outline-none mt-2 px-2 bg-zinc-700 rounded"
-                    placeholder="Enter title of the task..."
+                    placeholder="Enter title of the new task..."
                     onChange={(e) => setTitle(e.target.value)}
                     onKeyDown={(e) => handleKeyDown(e)}
                     ref={inputRef}

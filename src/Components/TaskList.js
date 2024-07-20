@@ -45,7 +45,7 @@ const TaskList = ({ color, data, hover_color, onRefetch }) => {
 
 TaskList.propTypes = {
     color: PropTypes.string.isRequired,
-    data: PropTypes.array.isRequired,
+    data: PropTypes.array,
     hover_color: PropTypes.string,
     onRefetch: PropTypes.func
 };
