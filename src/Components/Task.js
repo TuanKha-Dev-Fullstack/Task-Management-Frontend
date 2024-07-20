@@ -19,6 +19,13 @@ const Task = ({ task, color, onRefetch, hover_color }) => {
         });
         onRefetch();
     }
+    const handleImportant = async (id) => {
+        await axios({
+            method: 'PATCH',
+            url: 'http://localhost:5000/api/v1/tasks/' + id + '/important',
+        });
+        onRefetch();
+    }
     return (
         <div className="flex items-center justify-between p-3 mb-2 bg-zinc-700 rounded shadow">
             <div className="relative flex rounded-full cursor-pointer">
@@ -48,7 +55,8 @@ const Task = ({ task, color, onRefetch, hover_color }) => {
             <div className="flex items-center">
                 <FontAwesomeIcon icon={task.isImportant ? solidStar : regularStar}
                     className={`text-${color} cursor-pointer mr-2`}
-                // onClick={() => onEdit(task.id)} 
+                    title='Important'
+                    onClick={() => handleImportant(task.id)} 
                 />
                 <FontAwesomeIcon icon={faEdit}
                     className={`text-${color} cursor-pointer mr-2`}
