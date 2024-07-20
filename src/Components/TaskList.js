@@ -3,19 +3,14 @@ import Task from "./Task";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import '../Styles/CustomScroll.css';
-import useApi from "../Hooks/UseApi";
 import PropTypes from 'prop-types';
 
-const TaskList = ({ color, url, hover_color }) => {
-    const { data: tasks, refetch } = useApi(url);
-    const tasksUncompleted = tasks?.filter((task) => !task.isCompeleted);
-    const tasksCompleted = tasks?.filter((task) => task.isCompeleted);
+const TaskList = ({ color, data, hover_color, onRefetch }) => {
+    const tasksUncompleted = data?.filter((task) => !task.isCompeleted);
+    const tasksCompleted = data?.filter((task) => task.isCompeleted);
     const [showCompleted, setShowCompleted] = useState(true);
     const handleButtonCompleted = () => {
         setShowCompleted(!showCompleted);
-    }
-    const handleRefetch = () => {
-        refetch();
     }
     return (
         <div className="overflow-y-auto custom-scrollbar flex-grow">
@@ -24,7 +19,7 @@ const TaskList = ({ color, url, hover_color }) => {
                     <Task key={task.id}
                         task={task}
                         color={color} 
-                        onRefetch={handleRefetch} 
+                        onRefetch={onRefetch} 
                         hover_color={hover_color} />
                 ))}
                 <button className={`bg-zinc-700 text-white px-2 py-1 my-4 rounded flex items-center ${hover_color}`}
@@ -39,7 +34,7 @@ const TaskList = ({ color, url, hover_color }) => {
                         <Task key={task.id}
                             task={task}
                             color={color}
-                            onRefetch={handleRefetch}
+                            onRefetch={onRefetch}
                             hover_color={hover_color} />
                     ))}
                 </div>)}
@@ -50,8 +45,9 @@ const TaskList = ({ color, url, hover_color }) => {
 
 TaskList.propTypes = {
     color: PropTypes.string.isRequired,
-    url: PropTypes.string.isRequired,
-    hover_color: PropTypes.string
+    data: PropTypes.array.isRequired,
+    hover_color: PropTypes.string,
+    onRefetch: PropTypes.func
 };
 
 export default TaskList;
