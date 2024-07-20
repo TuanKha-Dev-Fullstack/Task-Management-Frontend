@@ -26,6 +26,13 @@ const Task = ({ task, color, onRefetch, hover_color }) => {
         });
         onRefetch();
     }
+    const handleDelete = async (id) => {
+        await axios({
+            method: 'DELETE',
+            url: 'http://localhost:5000/api/v1/tasks/' + id,
+        });
+        onRefetch();
+    }
     return (
         <div className="flex items-center justify-between p-3 mb-2 bg-zinc-700 rounded shadow">
             <div className="relative flex rounded-full cursor-pointer">
@@ -64,7 +71,8 @@ const Task = ({ task, color, onRefetch, hover_color }) => {
                 />
                 <FontAwesomeIcon icon={faTrashAlt}
                     className={`text-${color} cursor-pointer mr-2`}
-                // onClick={() => onDelete(task.id)} 
+                    title='Delete'
+                    onClick={() => handleDelete(task.id)}
                 />
             </div>
         </div>
