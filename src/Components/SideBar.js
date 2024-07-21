@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHouse, faList, faPlus, faStar, faSun } from "@fortawesome/free-solid-svg-icons";
+import { faHouse, faList, faPlus, faStar, faSun, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import '../Styles/CustomScroll.css';
 import logo from '../Images/Logo_TM.png';
 import useApi from '../Hooks/UseApi';
@@ -32,6 +32,13 @@ const SideBar = () => {
         if (event.key === 'Enter') {
             handlePost();
         }
+    }
+    const handleDelete = async (id) => {
+        await axios({
+            method: 'DELETE',
+            url: 'http://localhost:5000/api/v1/categories/' + id,
+        });
+        refetch();
     }
     return (
         <div className="w-1/4 p-4 my-4 bg-zinc-800 rounded-e-3xl shadow-[10px_0px_20px_rgba(0,0,0,0.5)] flex flex-col">
@@ -72,7 +79,7 @@ const SideBar = () => {
             <div className="flex-grow overflow-y-auto custom-scrollbar">
                 <ul>
                     {categories?.map((category) => (
-                        <li key={category.id} className={`hover:bg-blue-300 rounded ${activeLink === category.id ? 'bg-blue-300' : ''}`}>
+                        <li key={category.id} className={`hover:bg-blue-300 rounded flex ${activeLink === category.id ? 'bg-blue-300' : ''}`}>
                             <Link to={`/category/${category.id}`}
                                 className="font-semibold text-white w-full h-full flex p-2 pl-0"
                                 onClick={() => handleLinkClick(category.id)}>
@@ -81,11 +88,13 @@ const SideBar = () => {
                                     className="text-blue-500 mr-2 self-center" />
                                 {category.name}
                             </Link>
+                            <FontAwesomeIcon icon={faTrashAlt}
+                                className="text-blue-500 w-10 self-center hover:cursor-pointer"
+                                onClick={() => handleDelete(category.id)} />
                         </li>
                     ))}
                 </ul>
             </div>
-
             <div className="flex items-center justify-between bg-zinc-800">
                 <input
                     type="text"
