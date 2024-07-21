@@ -1,20 +1,38 @@
 import { Link } from "react-router-dom";
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHouse, faList, faPlus, faStar, faSun } from "@fortawesome/free-solid-svg-icons";
 import '../Styles/CustomScroll.css';
 import logo from '../Images/Logo_TM.png';
 import useApi from '../Hooks/UseApi';
+import axios from "axios";
 
 const SideBar = () => {
     // Define state
     const url = 'http://localhost:5000/api/v1/categories';
     const [activeLink, setActiveLink] = useState('tasks');
-    const { data: categories } = useApi(url);
+    const [category, setCategory] = useState('');
+    const inputRef = useRef(null);
+    const { data: categories, refetch } = useApi(url);
     // Handle link click to set active link
     const handleLinkClick = (link) => {
         setActiveLink(link);
     };
+    const handlePost = async () => {
+        await axios({
+            method: 'POST',
+            url: 'http://localhost:5000/api/v1/categories',
+            data: category,
+            headers: { "Content-Type": "application/json" },
+        });
+        refetch();
+        setCategory('');
+    }
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            handlePost();
+        }
+    }
     return (
         <div className="w-1/4 p-4 my-4 bg-zinc-800 rounded-e-3xl shadow-[10px_0px_20px_rgba(0,0,0,0.5)] flex flex-col">
             <img src={logo} alt="Logo" className="w-48 h-24 self-center mb-4" />
@@ -67,10 +85,22 @@ const SideBar = () => {
                     ))}
                 </ul>
             </div>
-            <button className="p-2 pl-4 rounded text-pink-700 font-bold text-left hover:bg-pink-200">
-                <FontAwesomeIcon icon={faPlus} className="text-pink-700 mr-2" />
-                New list
-            </button>
+
+            <div className="flex items-center justify-between bg-zinc-800">
+                <input
+                    type="text"
+                    value={category}
+                    className="w-full h-10 text-white border-none focus:outline-none px-2 bg-zinc-700 rounded mr-1"
+                    placeholder="Enter new category..."
+                    ref={inputRef}
+                    onChange={(e) => setCategory(e.target.value)}
+                    onKeyDown={(e) => handleKeyDown(e)}
+                />
+                <button className="p-2 pl-4 rounded bg-pink-700"
+                    onClick={handlePost}>
+                    <FontAwesomeIcon icon={faPlus} className="text-pink-300 mr-2" />
+                </button>
+            </div>
         </div>
     );
 };
