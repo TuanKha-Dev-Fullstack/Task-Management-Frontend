@@ -2,7 +2,7 @@ import axios from "axios";
 import { useRef, useState } from "react";
 import PropTypes from "prop-types";
 
-const InputTask = ({ onRefetch }) => {
+const InputTask = ({ onRefetch, id }) => {
     const [title, setTitle] = useState('');
     const inputRef = useRef(null);
     const handlePost = async () => {
@@ -11,7 +11,7 @@ const InputTask = ({ onRefetch }) => {
             url: 'http://localhost:5000/api/v1/tasks',
             data: {
                 name: title,
-                categoryId: null,
+                categoryId: id || null,
             },
             headers: { "Content-Type": "multipart/form-data" },
         });
@@ -39,7 +39,8 @@ const InputTask = ({ onRefetch }) => {
 };
 
 InputTask.propTypes = {
-    onRefetch: PropTypes.func
+    onRefetch: PropTypes.func,
+    id: PropTypes.number
 };
 
 export default InputTask;

@@ -2,16 +2,24 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import SideBar from "./Components/SideBar";
 import Tasks from "./Pages/Tasks";
 import Important from "./Pages/Important";
+import Categories from "./Pages/Categories";
+import useApi from "./Hooks/UseApi";
 const App = () => {
+  const url = 'http://localhost:5000/api/v1/categories';
+  const { data: categories, refetch } = useApi(url);
   return (
     <div className="flex h-screen bg-black gap-5">
       <BrowserRouter>
-        <SideBar />
+        <SideBar categories={categories} refetch={refetch} />
         <Routes>
           <Route path="/" element={<Tasks />} />
-          <Route path="/myday" element={<Tasks color="red-500"/>} />
+          <Route path="/myday" element={<Tasks color="red-500" />} />
           <Route path="/important" element={<Important />} />
-          <Route path="/category/:id" element={<Tasks color="red-500"/>} />
+          {categories?.map((category) => (
+            <Route key={category.id}
+              path={`/category/${category.id}`}
+              element={<Categories data={category} />} />
+          ))}
         </Routes>
       </BrowserRouter>
     </div>

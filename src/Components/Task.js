@@ -9,6 +9,7 @@ const tailwindColors = {
     'pink-300': '#f472b6',
     'red-500': '#ef4444',
     'yellow-500': '#facc15',
+    'blue-500': '#3B82F6',
 };
 
 const Task = ({ task, color, onRefetch, hover_color }) => {
