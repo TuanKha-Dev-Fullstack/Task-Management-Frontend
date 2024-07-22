@@ -13,7 +13,6 @@ const App = () => {
         <SideBar categories={categories} refetch={refetch} />
         <Routes>
           <Route path="/" element={<Tasks />} />
-          <Route path="/myday" element={<Tasks color="red-500" />} />
           <Route path="/important" element={<Important />} />
           {categories?.map((category) => (
             <Route key={category.id}
