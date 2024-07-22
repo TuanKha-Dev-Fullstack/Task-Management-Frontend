@@ -4,16 +4,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHouse, faList, faPlus, faStar, faSun, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import '../Styles/CustomScroll.css';
 import logo from '../Images/Logo_TM.png';
-import useApi from '../Hooks/UseApi';
 import axios from "axios";
+import PropTypes from 'prop-types';
 
-const SideBar = () => {
+const SideBar = ({categories, refetch}) => {
     // Define state
-    const url = 'http://localhost:5000/api/v1/categories';
     const [activeLink, setActiveLink] = useState('tasks');
     const [category, setCategory] = useState('');
     const inputRef = useRef(null);
-    const { data: categories, refetch } = useApi(url);
     // Handle link click to set active link
     const handleLinkClick = (link) => {
         setActiveLink(link);
@@ -113,5 +111,10 @@ const SideBar = () => {
         </div>
     );
 };
+
+SideBar.propTypes = {
+    categories: PropTypes.array,
+    refetch: PropTypes.func
+}
 
 export default SideBar;
