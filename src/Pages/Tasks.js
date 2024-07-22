@@ -3,14 +3,20 @@ import Title from "../Components/Title";
 import TaskList from "../Components/TaskList";
 import InputTask from "../Components/InputTask";
 import useApi from "../Hooks/UseApi";
+import { useEffect } from "react";
+import PropTypes from 'prop-types';
 
-const Tasks = () => {
+const Tasks = ({ refetchTasks }) => {
     const url = "http://localhost:5000/api/v1/tasks";
     const { data: tasks, refetch } = useApi(url);
     const handleRefetch = () => {
         refetch();
     };
-
+    useEffect(() => {
+        if(refetchTasks) {
+            handleRefetch();
+        }
+    }, [refetchTasks]);
     return (
         <div className="w-3/4 bg-zinc-800 m-4 rounded-xl p-4 overflow-hidden flex flex-col">
             <Title text="Tasks" icon={faHouse} color="text-red-500" />
@@ -25,5 +31,9 @@ const Tasks = () => {
         </div>
     );
 };
+
+Tasks.propTypes = {
+    refetchTasks: PropTypes.bool
+}
 
 export default Tasks;

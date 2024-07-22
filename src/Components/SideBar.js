@@ -7,7 +7,7 @@ import logo from '../Images/Logo_TM.png';
 import axios from "axios";
 import PropTypes from 'prop-types';
 
-const SideBar = ({categories, refetch}) => {
+const SideBar = ({categories, refetch, onChange}) => {
     // Define state
     const [activeLink, setActiveLink] = useState('tasks');
     const [category, setCategory] = useState('');
@@ -37,6 +37,7 @@ const SideBar = ({categories, refetch}) => {
             url: 'http://localhost:5000/api/v1/categories/' + id,
         });
         refetch();
+        onChange();
     }
     return (
         <div className="w-1/4 p-4 my-4 bg-zinc-800 rounded-e-3xl shadow-[10px_0px_20px_rgba(0,0,0,0.5)] flex flex-col">
@@ -104,7 +105,8 @@ const SideBar = ({categories, refetch}) => {
 
 SideBar.propTypes = {
     categories: PropTypes.array,
-    refetch: PropTypes.func
+    refetch: PropTypes.func,
+    onChange: PropTypes.func
 }
 
 export default SideBar;
