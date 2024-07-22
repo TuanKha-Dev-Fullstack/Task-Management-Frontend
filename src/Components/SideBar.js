@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHouse, faList, faPlus, faStar, faSun, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { faHouse, faList, faPlus, faStar, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import '../Styles/CustomScroll.css';
 import logo from '../Images/Logo_TM.png';
 import axios from "axios";
@@ -50,16 +50,6 @@ const SideBar = ({categories, refetch}) => {
                         <FontAwesomeIcon icon={faHouse}
                             className="text-red-500 mr-2 self-center" />
                         Tasks
-                    </Link>
-                </li>
-                <li className={`hover:bg-orange-300 rounded ${activeLink === 'myday' ? 'bg-orange-300' : ''}`}>
-                    <Link to="/myday"
-                        className="font-semibold text-white w-full h-full flex p-2 pl-0"
-                        onClick={() => handleLinkClick('myday')}>
-                        <span className={`w-1 mr-4 rounded ${activeLink === 'myday' ? 'bg-pink-500' : ''}`}></span>
-                        <FontAwesomeIcon icon={faSun}
-                            className="text-orange-500 mr-2 self-center" />
-                        My Day
                     </Link>
                 </li>
                 <li className={`hover:bg-yellow-500 rounded ${activeLink === 'important' ? 'bg-yellow-500' : ''}`}>
