@@ -11,12 +11,12 @@ const Important = () => {
     };
     return (
         <div className="w-3/4 bg-zinc-800 m-4 rounded-xl p-4 overflow-hidden flex flex-col">
-            <Title text="Important" icon={faStar} color="text-yellow-500" />
-            <TaskList 
+            <Title text="Important" icon={faStar} color="text-yellow-500" editMode={false} />
+            <TaskList
                 color="yellow-500"
-                url={url} 
+                url={url}
                 hover_color={'hover:bg-yellow-500'}
-                data={tasks} 
+                data={tasks}
                 onRefetch={handleRefetch} />
         </div>
     );
