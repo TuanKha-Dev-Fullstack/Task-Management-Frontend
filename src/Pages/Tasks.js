@@ -19,7 +19,7 @@ const Tasks = ({ refetchTasks }) => {
     }, [refetchTasks]);
     return (
         <div className="w-3/4 bg-zinc-800 m-4 rounded-xl p-4 overflow-hidden flex flex-col">
-            <Title text="Tasks" icon={faHouse} color="text-red-500" />
+            <Title text="Tasks" icon={faHouse} color="text-red-500" editMode={false} />
             <TaskList
                 color="red-500"
                 url={url}

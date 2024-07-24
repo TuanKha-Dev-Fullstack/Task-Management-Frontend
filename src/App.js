@@ -22,7 +22,8 @@ const App = () => {
           {categories?.map((category) => (
             <Route key={category.id}
               path={`/category/${category.id}`}
-              element={<Categories data={category} />} />
+              element={<Categories data={category}
+                onRefetch={refetch} />} />
           ))}
         </Routes>
       </BrowserRouter>
