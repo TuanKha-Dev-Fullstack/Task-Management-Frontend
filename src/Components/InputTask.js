@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
-const InputTask = ({ onRefetch, id, iconColor, buttonColor }) => {
+const InputTask = ({ onRefetch, id, iconColor, buttonColor, isImportant }) => {
     const [title, setTitle] = useState('');
     const inputRef = useRef(null);
     const handlePost = async () => {
@@ -14,6 +14,7 @@ const InputTask = ({ onRefetch, id, iconColor, buttonColor }) => {
             data: {
                 name: title,
                 categoryId: id || null,
+                isImportant: isImportant || false
             },
             headers: { "Content-Type": "multipart/form-data" },
         });
@@ -48,7 +49,8 @@ InputTask.propTypes = {
     onRefetch: PropTypes.func,
     id: PropTypes.number,
     iconColor: PropTypes.string,
-    buttonColor: PropTypes.string
+    buttonColor: PropTypes.string,
+    isImportant: PropTypes.bool
 };
 
 export default InputTask;
