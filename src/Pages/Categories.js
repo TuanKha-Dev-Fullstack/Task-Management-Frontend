@@ -17,7 +17,7 @@ const Categories = ({ data, onRefetch }) => {
                 hover_color={'hover:bg-blue-500'}
                 data={tasks} 
                 onRefetch={refetch} />
-            <InputTask onRefetch={refetch} id={data.id} />
+            <InputTask onRefetch={refetch} id={data.id} iconColor={"text-blue-300"} buttonColor={"bg-blue-500"}/>
         </div>
     )
 }

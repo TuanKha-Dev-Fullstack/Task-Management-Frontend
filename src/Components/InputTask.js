@@ -1,8 +1,10 @@
 import axios from "axios";
 import { useRef, useState } from "react";
 import PropTypes from "prop-types";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
-const InputTask = ({ onRefetch, id }) => {
+const InputTask = ({ onRefetch, id, iconColor, buttonColor }) => {
     const [title, setTitle] = useState('');
     const inputRef = useRef(null);
     const handlePost = async () => {
@@ -34,13 +36,19 @@ const InputTask = ({ onRefetch, id }) => {
                     onKeyDown={(e) => handleKeyDown(e)}
                     ref={inputRef}
                 />
+                <button className={`w-20 h-10 rounded ${buttonColor} ml-2 mt-2`}
+                    onClick={handlePost}>
+                    <FontAwesomeIcon icon={faPlus} className={`${iconColor} px-2`} />
+                </button>
         </div>
     );
 };
 
 InputTask.propTypes = {
     onRefetch: PropTypes.func,
-    id: PropTypes.number
+    id: PropTypes.number,
+    iconColor: PropTypes.string,
+    buttonColor: PropTypes.string
 };
 
 export default InputTask;
