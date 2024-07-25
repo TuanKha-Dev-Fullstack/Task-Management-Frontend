@@ -43,12 +43,20 @@ const SideBar = ({ categories, refetch, onChange, onNotify }) => {
         }
     }
     const handleDelete = async (id) => {
-        await axios({
-            method: 'DELETE',
-            url: 'http://localhost:5000/api/v1/categories/' + id,
-        });
-        refetch();
-        onChange();
+        try {
+            const response = await axios({
+                method: 'DELETE',
+                url: 'http://localhost:5000/api/v1/categories/' + id,
+            });
+            if (response.status === 200) {
+                onNotify(200, response.data || 'Category deleted successfully!');
+                refetch();
+                onChange();
+            } else
+                onNotify(response.data?.status, response.data);
+        } catch (error) {
+            onNotify(error.response.data?.status, error.response.data);
+        }
     }
     return (
         <div className="w-1/4 p-4 my-4 bg-zinc-800 rounded-e-3xl shadow-[10px_0px_20px_rgba(0,0,0,0.5)] flex flex-col">
