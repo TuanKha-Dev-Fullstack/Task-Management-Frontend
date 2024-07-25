@@ -36,13 +36,14 @@ const App = () => {
         <Notification />
         <SideBar categories={categories} refetch={refetch} onChange={handleRefetchTasks} onNotify={handleNotification} />
         <Routes>
-          <Route path="/" element={<Tasks refetchTasks={refetchTasks} />} />
-          <Route path="/important" element={<Important />} />
+          <Route path="/" element={<Tasks refetchTasks={refetchTasks} onNotify={handleNotification} />} />
+          <Route path="/important" element={<Important onNotify={handleNotification} />} />
           {categories?.map((category) => (
             <Route key={category.id}
               path={`/category/${category.id}`}
               element={<Categories data={category}
-                onRefetch={refetch} />} />
+                onRefetch={refetch}
+                onNotify={handleNotification} />} />
           ))}
         </Routes>
       </BrowserRouter>

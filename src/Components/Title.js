@@ -3,7 +3,7 @@ import axios from "axios";
 import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
 
-const Title = ({ text, icon, color, editMode, categoryId = 0, onRefetch }) => {
+const Title = ({ text, icon, color, editMode, categoryId = 0, onRefetch, onNotify }) => {
     const [title, setTitle] = useState(text);
     const [isEdit, setIsEdit] = useState(false);
     const inputRef = useRef(null);
@@ -18,7 +18,7 @@ const Title = ({ text, icon, color, editMode, categoryId = 0, onRefetch }) => {
     }, [isEdit]);
     const handleEdit = async () => {
         try {
-            await axios({
+            const response = await axios({
                 method: 'PATCH',
                 url: `http://localhost:5000/api/v1/categories/${categoryId}`,
                 data: {
@@ -26,10 +26,14 @@ const Title = ({ text, icon, color, editMode, categoryId = 0, onRefetch }) => {
                 },
                 headers: { "Content-Type": "multipart/form-data" },
             });
-            setIsEdit(false);
-            onRefetch();
+            if (response.status === 200) {
+                onNotify(200, response.data || 'Category updated successfully!');
+                setIsEdit(false);
+                onRefetch();
+            } else 
+                onNotify(response.data?.status, response.data);
         } catch (error) {
-            console.error("Error updating category name:", error);
+            onNotify(error.response.data?.status, error.response.data?.errors.name[0]);
         }
     };
     const handleButtonClick = () => {
@@ -77,7 +81,8 @@ Title.propTypes = {
     color: PropTypes.string.isRequired,
     editMode: PropTypes.bool,
     categoryId: PropTypes.number,
-    onRefetch: PropTypes.func
+    onRefetch: PropTypes.func,
+    onNotify: PropTypes.func
 };
 
 export default Title;

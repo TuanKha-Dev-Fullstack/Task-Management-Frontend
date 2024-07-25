@@ -6,7 +6,7 @@ import useApi from "../Hooks/UseApi";
 import { useEffect } from "react";
 import PropTypes from 'prop-types';
 
-const Tasks = ({ refetchTasks }) => {
+const Tasks = ({ refetchTasks, onNotify }) => {
     const url = "http://localhost:5000/api/v1/tasks";
     const { data: tasks, refetch } = useApi(url);
     const handleRefetch = () => {
@@ -27,13 +27,14 @@ const Tasks = ({ refetchTasks }) => {
                 data={tasks}
                 onRefetch={handleRefetch}
             />
-            <InputTask onRefetch={handleRefetch} iconColor={"text-red-300"} buttonColor={"bg-red-500"}/>
+            <InputTask onRefetch={handleRefetch} iconColor={"text-red-300"} buttonColor={"bg-red-500"} onNotify={onNotify}/>
         </div>
     );
 };
 
 Tasks.propTypes = {
-    refetchTasks: PropTypes.bool
+    refetchTasks: PropTypes.bool,
+    onNotify: PropTypes.func
 }
 
 export default Tasks;
