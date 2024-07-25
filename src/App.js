@@ -5,6 +5,9 @@ import Important from "./Pages/Important";
 import Categories from "./Pages/Categories";
 import useApi from "./Hooks/UseApi";
 import { useState } from "react";
+import Notification from "./Components/Notification";
+import { toast } from "react-toastify";
+
 const App = () => {
   const url = 'http://localhost:5000/api/v1/categories';
   const { data: categories, refetch } = useApi(url);
@@ -12,10 +15,26 @@ const App = () => {
   const handleRefetchTasks = () => {
     setRefetchTasks(!refetchTasks);
   }
+  const handleNotification = (newStatus, newMessage) => {
+    const status = newStatus;
+    const message = newMessage;
+    if (status === 200) {
+      toast.success(message, {
+        autoClose: 2000,
+        theme: "dark",
+      });
+    } else {
+      toast.error(message, {
+        autoClose: 2000,
+        theme: "dark",
+      });
+    }
+  }
   return (
     <div className="flex h-screen bg-black gap-5">
       <BrowserRouter>
-        <SideBar categories={categories} refetch={refetch} onChange={handleRefetchTasks} />
+        <Notification />
+        <SideBar categories={categories} refetch={refetch} onChange={handleRefetchTasks} onNotify={handleNotification} />
         <Routes>
           <Route path="/" element={<Tasks refetchTasks={refetchTasks} />} />
           <Route path="/important" element={<Important />} />

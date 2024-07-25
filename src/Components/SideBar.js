@@ -7,7 +7,7 @@ import logo from '../Images/Logo_TM.png';
 import axios from "axios";
 import PropTypes from 'prop-types';
 
-const SideBar = ({categories, refetch, onChange}) => {
+const SideBar = ({ categories, refetch, onChange, onNotify }) => {
     // Define state
     const [activeLink, setActiveLink] = useState(sessionStorage.getItem('activeLink') || 'tasks');
     const [category, setCategory] = useState('');
@@ -18,15 +18,25 @@ const SideBar = ({categories, refetch, onChange}) => {
         sessionStorage.setItem('activeLink', link);
     };
     const handlePost = async () => {
-        await axios({
-            method: 'POST',
-            url: 'http://localhost:5000/api/v1/categories',
-            data: category,
-            headers: { "Content-Type": "application/json" },
-        });
-        refetch();
-        setCategory('');
-    }
+        try {
+            const response = await axios.post(
+                'http://localhost:5000/api/v1/categories',
+                { name: category },
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                }
+            );
+            if (response.status === 200) {
+                onNotify(200, response.data || 'Category created successfully!');
+                refetch();
+                setCategory('');
+            }
+        } catch (error) {
+            onNotify(error.response.data?.status, error.response.data?.errors.name[0]);
+        }
+    };
     const handleKeyDown = (event) => {
         if (event.key === 'Enter') {
             handlePost();
@@ -107,7 +117,8 @@ const SideBar = ({categories, refetch, onChange}) => {
 SideBar.propTypes = {
     categories: PropTypes.array,
     refetch: PropTypes.func,
-    onChange: PropTypes.func
-}
+    onChange: PropTypes.func,
+    onNotify: PropTypes.func
+};
 
 export default SideBar;
