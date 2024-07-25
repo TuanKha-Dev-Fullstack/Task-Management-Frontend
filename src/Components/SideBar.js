@@ -9,12 +9,13 @@ import PropTypes from 'prop-types';
 
 const SideBar = ({categories, refetch, onChange}) => {
     // Define state
-    const [activeLink, setActiveLink] = useState('tasks');
+    const [activeLink, setActiveLink] = useState(sessionStorage.getItem('activeLink') || 'tasks');
     const [category, setCategory] = useState('');
     const inputRef = useRef(null);
     // Handle link click to set active link
     const handleLinkClick = (link) => {
         setActiveLink(link);
+        sessionStorage.setItem('activeLink', link);
     };
     const handlePost = async () => {
         await axios({
@@ -68,11 +69,11 @@ const SideBar = ({categories, refetch, onChange}) => {
             <div className="flex-grow overflow-y-auto custom-scrollbar">
                 <ul>
                     {categories?.map((category) => (
-                        <li key={category.id} className={`hover:bg-blue-300 rounded flex ${activeLink === category.id ? 'bg-blue-300' : ''}`}>
+                        <li key={category.id} className={`hover:bg-blue-300 rounded flex ${activeLink === 'category/' + category.id ? 'bg-blue-300' : ''}`}>
                             <Link to={`/category/${category.id}`}
                                 className="font-semibold text-white w-full h-full flex p-2 pl-0"
-                                onClick={() => handleLinkClick(category.id)}>
-                                <span className={`w-1 mr-4 rounded ${activeLink === category.id ? 'bg-pink-500' : ''}`}></span>
+                                onClick={() => handleLinkClick('category/' + category.id)}>
+                                <span className={`w-1 mr-4 rounded ${activeLink === 'category/' + category.id ? 'bg-pink-500' : ''}`}></span>
                                 <FontAwesomeIcon icon={faList}
                                     className="text-blue-500 mr-2 self-center" />
                                 {category.name}
