@@ -27,7 +27,7 @@ const Tasks = ({ refetchTasks }) => {
                 data={tasks}
                 onRefetch={handleRefetch}
             />
-            <InputTask onRefetch={handleRefetch} />
+            <InputTask onRefetch={handleRefetch} iconColor={"text-red-300"} buttonColor={"bg-red-500"}/>
         </div>
     );
 };
