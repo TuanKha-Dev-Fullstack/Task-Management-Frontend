@@ -4,22 +4,30 @@ import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
-const InputTask = ({ onRefetch, id, iconColor, buttonColor, isImportant }) => {
+const InputTask = ({ onRefetch, id, iconColor, buttonColor, isImportant, onNotify }) => {
     const [title, setTitle] = useState('');
     const inputRef = useRef(null);
     const handlePost = async () => {
-        await axios({
-            method: 'POST',
-            url: 'http://localhost:5000/api/v1/tasks',
-            data: {
-                name: title,
-                categoryId: id || null,
-                isImportant: isImportant || false
-            },
-            headers: { "Content-Type": "multipart/form-data" },
-        });
-        onRefetch();
-        setTitle('');
+        try {
+            const response = await axios({
+                method: 'POST',
+                url: 'http://localhost:5000/api/v1/tasks',
+                data: {
+                    name: title,
+                    categoryId: id || null,
+                    isImportant: isImportant || false
+                },
+                headers: { "Content-Type": "multipart/form-data" },
+            });
+            if (response.status === 200) {
+                onNotify(200, response.data || 'Task created successfully!');
+                onRefetch();
+                setTitle('');
+            } else 
+                onNotify(response.data?.status, response.data);
+        } catch (error) {
+            onNotify(error.response.data?.status, error.response.data.errors.name[0]);
+        }
     }
     const handleKeyDown = (event) => {
         if (event.key === 'Enter') {
@@ -50,7 +58,8 @@ InputTask.propTypes = {
     id: PropTypes.number,
     iconColor: PropTypes.string,
     buttonColor: PropTypes.string,
-    isImportant: PropTypes.bool
+    isImportant: PropTypes.bool,
+    onNotify: PropTypes.func
 };
 
 export default InputTask;

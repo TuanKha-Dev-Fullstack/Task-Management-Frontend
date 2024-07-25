@@ -3,8 +3,9 @@ import Title from "../Components/Title";
 import TaskList from "../Components/TaskList";
 import useApi from "../Hooks/UseApi";
 import InputTask from "../Components/InputTask";
+import PropTypes from 'prop-types';
 
-const Important = () => {
+const Important = ({ onNotify }) => {
     const url = 'http://localhost:5000/api/v1/tasks/important';
     const { data: tasks, refetch } = useApi(url);
     return (
@@ -16,9 +17,13 @@ const Important = () => {
                 hover_color={'hover:bg-yellow-500'}
                 data={tasks}
                 onRefetch={refetch} />
-            <InputTask onRefetch={refetch} iconColor={"text-yellow-300"} buttonColor={"bg-yellow-500"} isImportant={true}/>
+            <InputTask onRefetch={refetch} iconColor={"text-yellow-300"} buttonColor={"bg-yellow-500"} isImportant={true} onNotify={onNotify}/>
         </div>
     );
+};
+
+Important.propTypes = {
+    onNotify: PropTypes.func
 };
 
 export default Important;
